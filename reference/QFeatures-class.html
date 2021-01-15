@@ -69,6 +69,8 @@ sure that these match the class validity requirements." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -96,19 +98,13 @@ sure that these match the class validity requirements." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">QFeatures</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/QFeatures.html">Get started</a>
 </li>
 <li>
@@ -126,11 +122,14 @@ sure that these match the class validity requirements." />
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/RforMassSpectrometry/QFeatures/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -162,9 +161,9 @@ assays are typically defined as <code>SummarizedExperiment</code> objects. In
 addition, a <code>QFeatures</code> object also uses a single <code>DataFrame</code> to
 annotate the samples (columns) represented in all the matrices.</p>
 <p>The <code>QFeatures</code> class extends the
-<a href='https://rdrr.io/pkg/MultiAssayExperiment/man/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> and inherits all
+<a href='http://waldronlab.io/MultiAssayExperiment/reference/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> and inherits all
 the functionality of the
-<a href='https://rdrr.io/pkg/MultiAssayExperiment/man/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> class.</p>
+<a href='http://waldronlab.io/MultiAssayExperiment/reference/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> class.</p>
 <p>A typical use case for such <code>QFeatures</code> object is to represent
 quantitative proteomics (or metabolomics) data, where different
 assays represent quantitation data at the PSM (the main assay),
@@ -192,12 +191,17 @@ dims(x)
 # S4 method for QFeatures,character,ANY,ANY
 [(x, i, j, k, ..., drop = TRUE)
 
+# S4 method for QFeatures
+rowData(x, use.names = TRUE, ...)
+
 selectRowData(x, rowvars)
 
 rowDataNames(x)
 
 # S4 method for QFeatures,character
 names(x) &lt;- value
+
+longFormat(object, colDataCols = NULL, rowDataCols = NULL, index = 1L)
 
 QFeatures(..., assayLinks = NULL)
 
@@ -239,6 +243,11 @@ elements in the <code>ExperimentList</code>.</p></td>
 subsetting by assays</p></td>
     </tr>
     <tr>
+      <th>use.names</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> indicating whether the rownames of
+each assay should be propagated to the corresponding <code>rowData</code>.</p></td>
+    </tr>
+    <tr>
       <th>rowvars</th>
       <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> with the names of the <code>rowData</code>
 variables (columns) to retain in any assay. All other
@@ -248,6 +257,23 @@ isn't found in any <code>rowData</code> variable, a message is printed.</p></td>
     <tr>
       <th>value</th>
       <td><p>A character() with new name(s) for the assay(s) in <code>x</code></p></td>
+    </tr>
+    <tr>
+      <th>colDataCols</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>, <code><a href='https://rdrr.io/r/base/logical.html'>logical()</a></code>, or <code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>
+index for colData columns to be included.</p></td>
+    </tr>
+    <tr>
+      <th>rowDataCols</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> index for colData columns to be
+included.</p></td>
+    </tr>
+    <tr>
+      <th>index</th>
+      <td><p>The assay indicator for <code>SummarizedExperiment</code>
+objects. A vector input is supported in the case that the
+<code>SummarizedExperiment</code> object(s) has more than one assay
+(default <code>1L</code>)</p></td>
     </tr>
     <tr>
       <th>assayLinks</th>
@@ -264,6 +290,9 @@ isn't found in any <code>rowData</code> variable, a message is printed.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>See individual method description for the return value.</p>
     <h2 class="hasAnchor" id="constructors"><a class="anchor" href="#constructors"></a>Constructors</h2>
 
     
@@ -272,7 +301,7 @@ isn't found in any <code>rowData</code> variable, a message is printed.</p></td>
 <li><p><code>QFeatures(..., assayLinks)</code> allows the manual construction of
 objects. It is the user's responsability to make sure these
 comply. The arguments in <code>...</code> are those documented in
-<code><a href='https://rdrr.io/pkg/MultiAssayExperiment/man/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment()</a></code>. For details
+<code><a href='http://waldronlab.io/MultiAssayExperiment/reference/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment()</a></code>. For details
 about <code>assayLinks</code>, see <a href='AssayLinks.html'>AssayLinks</a>. An example is shown below.</p></li>
 <li><p>The <code><a href='readQFeatures.html'>readQFeatures()</a></code> function constructs a <code>QFeatures</code> object
 from text-based spreadsheet or a <code>data.frame</code> used to generate
@@ -286,10 +315,15 @@ example.</p></li>
 
 <ul>
 <li><p>The <code>QFeatures</code> class extends the
-<a href='https://rdrr.io/pkg/MultiAssayExperiment/man/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> class and inherits
+<a href='http://waldronlab.io/MultiAssayExperiment/reference/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a> class and inherits
 all its accessors and replacement methods.</p></li>
 <li><p>The <code>rowDataNames</code> accessor returns a list with the <code>rowData</code>
 variable names.</p></li>
+<li><p>The <code>longFormat</code> accessor takes a <code>QFeatures</code> object and returns
+it in a long format <code>DataFrame</code>. Each quantitative value is
+reported on a separate line. <code>colData</code> and <code>rowData</code> data can
+also be added. This function is an extension of the <code>longFormat</code>
+function in the <a href='http://waldronlab.io/MultiAssayExperiment/reference/MultiAssayExperiment.html'>MultiAssayExperiment::MultiAssayExperiment</a>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="adding-assays"><a class="anchor" href="#adding-assays"></a>Adding assays</h2>
@@ -297,7 +331,7 @@ variable names.</p></li>
     
 
 <ul>
-<li><p>The <code><a href='QFeatures-aggregate.html'>aggregateFeatures()</a></code> function creates a new assay by
+<li><p>The <code><a href='aggregateFeatures.html'>aggregateFeatures()</a></code> function creates a new assay by
 aggregating features of an existing assay.</p></li>
 <li><p><code>addAssay(x, y, name, assayLinks)</code>: Adds a new assay (or
 list of assays) <code>y</code> to the <code>QFeatures</code> instance <code>x</code>. <code>name</code>
@@ -312,7 +346,7 @@ assays. <code>assayLinks</code> is an optional <a href='AssayLinks.html'>AssayLi
 
 <ul>
 <li><p>QFeatures object can be subset using the <code>x[i, j, k, drop = TRUE]</code> paradigm. See the argument descriptions for details.</p></li>
-<li><p>The <code><a href='QFeatures-subsetBy.html'>subsetByFeature()</a></code> function can be used to subset a
+<li><p>The <code><a href='subsetByFeature.html'>subsetByFeature()</a></code> function can be used to subset a
 <code>QFeatures</code> object using one or multiple feature names that will
 be matched across different assays, taking the aggregation
 relation between assays.</p></li>
@@ -325,49 +359,55 @@ in <code>rowvars</code> in the <code>x</code> instance of class <code>QFeatures<
 
     <div class='dont-index'>
 <ul>
-<li><p>The <code><a href='readQFeatures.html'>readQFeatures()</a></code> constructor and the <code><a href='QFeatures-aggregate.html'>aggregateFeatures()</a></code>
+<li><p>The <code><a href='readQFeatures.html'>readQFeatures()</a></code> constructor and the <code><a href='aggregateFeatures.html'>aggregateFeatures()</a></code>
 function. The <em>QFeatures</em> vignette provides an extended example.</p></li>
 <li><p>The <a href='QFeatures-filtering.html'>QFeatures-filtering</a> manual page demonstrates how to filter
 features based on their rowData.</p></li>
-<li><p>The <a href='QFeatures-missing-data.html'>missing-data</a> manual page to manage missing values in
+<li><p>The <a href='missing-data.html'>missing-data</a> manual page to manage missing values in
 <code>QFeatures</code> objects.</p></li>
-<li><p>The <a href='QFeatures-processing.html'>QFeatures-processing</a> and <code><a href='QFeatures-aggregate.html'>aggregateFeatures()</a></code> manual pages
+<li><p>The <a href='QFeatures-processing.html'>QFeatures-processing</a> and <code><a href='aggregateFeatures.html'>aggregateFeatures()</a></code> manual pages
 and <em>Processing</em> vignette describe common quantitative data
 processing methods using in quantitative proteomics.</p></li>
 </ul>
 </div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## ------------------------</span>
 <span class='co'>## An empty QFeatures object</span>
 <span class='co'>## ------------------------</span>
 
-<span class='fu'>QFeatures</span>()</div><div class='output co'>#&gt; A empty instance of class QFeatures </div><div class='input'>
+<span class='fu'>QFeatures</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; A empty instance of class QFeatures </div><div class='input'>
 <span class='co'>## -----------------------------------</span>
 <span class='co'>## Creating a QFeatures object manually</span>
 <span class='co'>## -----------------------------------</span>
 
 <span class='co'>## two assays (matrices) with matching column names</span>
-<span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>40</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>16</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>sample_names</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"S"</span>, <span class='fl'>1</span>:<span class='fl'>4</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>m1</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>m2</span>) <span class='kw'>&lt;-</span> <span class='no'>sample_names</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>m1</span>) <span class='kw'>&lt;-</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>m2</span>) <span class='kw'>&lt;-</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]
+<span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>40</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>sample_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"S"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>sample_names</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
 
 <span class='co'>## two corresponding feature metadata with appropriate row names</span>
-<span class='no'>df1</span> <span class='kw'>&lt;-</span> <span class='fu'>DataFrame</span>(<span class='kw'>Fa</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>Fb</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
-                 <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>m1</span>))
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'>DataFrame</span>(<span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>m2</span>))
+<span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'>DataFrame</span><span class='op'>(</span>Fa <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, Fb <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>,
+                 row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>DataFrame</span><span class='op'>(</span>row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span><span class='op'>)</span>
 
-(<span class='no'>se1</span> <span class='kw'>&lt;-</span> <span class='fu'>SummarizedExperiment</span>(<span class='no'>m1</span>, <span class='no'>df1</span>))</div><div class='output co'>#&gt; class: SummarizedExperiment 
+<span class='op'>(</span><span class='va'>se1</span> <span class='op'>&lt;-</span> <span class='fu'>SummarizedExperiment</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>df1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; class: SummarizedExperiment 
 #&gt; dim: 10 4 
 #&gt; metadata(0):
 #&gt; assays(1): ''
 #&gt; rownames(10): a b ... i j
 #&gt; rowData names(2): Fa Fb
 #&gt; colnames(4): S1 S2 S3 S4
-#&gt; colData names(0):</div><div class='input'>(<span class='no'>se2</span> <span class='kw'>&lt;-</span> <span class='fu'>SummarizedExperiment</span>(<span class='no'>m2</span>, <span class='no'>df2</span>))</div><div class='output co'>#&gt; class: SummarizedExperiment 
+#&gt; colData names(0):</div><div class='input'><span class='op'>(</span><span class='va'>se2</span> <span class='op'>&lt;-</span> <span class='fu'>SummarizedExperiment</span><span class='op'>(</span><span class='va'>m2</span>, <span class='va'>df2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; class: SummarizedExperiment 
 #&gt; dim: 4 4 
 #&gt; metadata(0):
 #&gt; assays(1): ''
@@ -376,22 +416,25 @@ processing methods using in quantitative proteomics.</p></li>
 #&gt; colnames(4): S1 S2 S3 S4
 #&gt; colData names(0):</div><div class='input'>
 <span class='co'>## Sample annotation (colData)</span>
-<span class='no'>cd</span> <span class='kw'>&lt;-</span> <span class='fu'>DataFrame</span>(<span class='kw'>Var1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>4</span>),
-                <span class='kw'>Var2</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>4</span>],
-                <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='no'>sample_names</span>)
+<span class='va'>cd</span> <span class='op'>&lt;-</span> <span class='fu'>DataFrame</span><span class='op'>(</span>Var1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>,
+                Var2 <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>,
+                row.names <span class='op'>=</span> <span class='va'>sample_names</span><span class='op'>)</span>
 
-<span class='no'>el</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>assay1</span> <span class='kw'>=</span> <span class='no'>se1</span>, <span class='kw'>assay2</span> <span class='kw'>=</span> <span class='no'>se2</span>)
-<span class='no'>fts1</span> <span class='kw'>&lt;-</span> <span class='fu'>QFeatures</span>(<span class='no'>el</span>, <span class='kw'>colData</span> <span class='kw'>=</span> <span class='no'>cd</span>)
-<span class='no'>fts1</span></div><div class='output co'>#&gt; A instance of class QFeatures containing 2 assays:
+<span class='va'>el</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>assay1 <span class='op'>=</span> <span class='va'>se1</span>, assay2 <span class='op'>=</span> <span class='va'>se2</span><span class='op'>)</span>
+<span class='va'>fts1</span> <span class='op'>&lt;-</span> <span class='fu'>QFeatures</span><span class='op'>(</span><span class='va'>el</span>, colData <span class='op'>=</span> <span class='va'>cd</span><span class='op'>)</span>
+<span class='va'>fts1</span>
+</div><div class='output co'>#&gt; An instance of class QFeatures containing 2 assays:
 #&gt;  [1] assay1: SummarizedExperiment with 10 rows and 4 columns 
-#&gt;  [2] assay2: SummarizedExperiment with 4 rows and 4 columns </div><div class='input'><span class='no'>fts1</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; class: SummarizedExperiment 
+#&gt;  [2] assay2: SummarizedExperiment with 4 rows and 4 columns </div><div class='input'><span class='va'>fts1</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; class: SummarizedExperiment 
 #&gt; dim: 10 4 
 #&gt; metadata(0):
 #&gt; assays(1): ''
 #&gt; rownames(10): a b ... i j
 #&gt; rowData names(2): Fa Fb
 #&gt; colnames(4): S1 S2 S3 S4
-#&gt; colData names(0):</div><div class='input'><span class='no'>fts1</span><span class='kw'>[[</span><span class='st'>"assay1"</span>]]</div><div class='output co'>#&gt; class: SummarizedExperiment 
+#&gt; colData names(0):</div><div class='input'><span class='va'>fts1</span><span class='op'>[[</span><span class='st'>"assay1"</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; class: SummarizedExperiment 
 #&gt; dim: 10 4 
 #&gt; metadata(0):
 #&gt; assays(1): ''
@@ -400,21 +443,26 @@ processing methods using in quantitative proteomics.</p></li>
 #&gt; colnames(4): S1 S2 S3 S4
 #&gt; colData names(0):</div><div class='input'>
 <span class='co'>## Rename assay</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>fts1</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"se1"</span>, <span class='st'>"se2"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>fts1</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"se1"</span>, <span class='st'>"se2"</span><span class='op'>)</span>
 
 <span class='co'>## Add an assay</span>
-<span class='no'>fts1</span> <span class='kw'>&lt;-</span> <span class='fu'>addAssay</span>(<span class='no'>fts1</span>, <span class='no'>se1</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ], <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"se3"</span>)
+<span class='va'>fts1</span> <span class='op'>&lt;-</span> <span class='fu'>addAssay</span><span class='op'>(</span><span class='va'>fts1</span>, <span class='va'>se1</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='op'>]</span>, name <span class='op'>=</span> <span class='st'>"se3"</span><span class='op'>)</span>
 
+<span class='co'>## Get the assays feature metadata</span>
+<span class='fu'>rowData</span><span class='op'>(</span><span class='va'>fts1</span><span class='op'>)</span> 
+</div><div class='output co'>#&gt; DataFrameList of length 3
+#&gt; names(3): se1 se2 se3</div><div class='input'>
 <span class='co'>## Keep only the Fa variable</span>
-<span class='fu'>selectRowData</span>(<span class='no'>fts1</span>, <span class='kw'>rowvars</span> <span class='kw'>=</span> <span class='st'>"Fa"</span>)</div><div class='output co'>#&gt; A instance of class QFeatures containing 3 assays:
+<span class='fu'>selectRowData</span><span class='op'>(</span><span class='va'>fts1</span>, rowvars <span class='op'>=</span> <span class='st'>"Fa"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; An instance of class QFeatures containing 3 assays:
 #&gt;  [1] se1: SummarizedExperiment with 10 rows and 4 columns 
 #&gt;  [2] se2: SummarizedExperiment with 4 rows and 4 columns 
 #&gt;  [3] se3: SummarizedExperiment with 2 rows and 4 columns </div><div class='input'>
-## -----------------------------------
-## See ?readQFeatures to create a
-## QFeatures object from a data.frame
-## or spreadsheet.
-## -----------------------------------
+<span class='co'>## -----------------------------------</span>
+<span class='co'>## See ?readQFeatures to create a</span>
+<span class='co'>## QFeatures object from a data.frame</span>
+<span class='co'>## or spreadsheet.</span>
+<span class='co'>## -----------------------------------</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -427,11 +475,11 @@ processing methods using in quantitative proteomics.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto.</p>
+  <p>Developed by Laurent Gatto, Christophe Vanderaa.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
