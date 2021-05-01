@@ -6,7 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Placeholder for generics functions documentation — AllGenerics • QFeatures</title>
+<title>Count Unique Features
+
+This function counts the number of unique features per sample. A
+grouping structure can be provided to count higher level features
+from assays, for example counting the number of unique proteins
+from PSM data. — countUniqueFeatures • QFeatures</title>
 
 
 <!-- jquery -->
@@ -39,8 +44,17 @@
 
 
 
-<meta property="og:title" content="Placeholder for generics functions documentation — AllGenerics" />
-<meta property="og:description" content="Placeholder for generics functions documentation" />
+<meta property="og:title" content="Count Unique Features
+
+This function counts the number of unique features per sample. A
+grouping structure can be provided to count higher level features
+from assays, for example counting the number of unique proteins
+from PSM data. — countUniqueFeatures" />
+<meta property="og:description" content="Count Unique Features
+This function counts the number of unique features per sample. A
+grouping structure can be provided to count higher level features
+from assays, for example counting the number of unique proteins
+from PSM data." />
 
 
 
@@ -57,6 +71,8 @@
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
 
 
   
@@ -129,18 +145,74 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Placeholder for generics functions documentation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/QFeatures/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a></small>
-    <div class="hidden name"><code>AllGenerics.Rd</code></div>
+    <h1>Count Unique Features
+
+This function counts the number of unique features per sample. A
+grouping structure can be provided to count higher level features
+from assays, for example counting the number of unique proteins
+from PSM data.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/QFeatures/blob/master/R/QFeatures-functions.R'><code>R/QFeatures-functions.R</code></a></small>
+    <div class="hidden name"><code>countUniqueFeatures.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Placeholder for generics functions documentation</p>
+    <p>Count Unique Features</p>
+<p>This function counts the number of unique features per sample. A
+grouping structure can be provided to count higher level features
+from assays, for example counting the number of unique proteins
+from PSM data.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>countUniqueFeatures</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>i</span>, groupBy <span class='op'>=</span> <span class='cn'>NULL</span>, colDataName <span class='op'>=</span> <span class='st'>"count"</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>An object of class <code>QFeatures</code>.</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code> or <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> vector indicating from
+which assays the <code>rowData</code> should be taken.</p></td>
+    </tr>
+    <tr>
+      <th>groupBy</th>
+      <td><p>A <code>character(1)</code> indicating the variable name in
+the <code>rowData</code> that contains the grouping variable, for
+instance to count the unique number of peptides or proteins
+expressed in each samples (column). If <code>groupBy</code> is missing,
+the number of non zero elements per sample will be stored.</p></td>
+    </tr>
+    <tr>
+      <th>colDataName</th>
+      <td><p>A <code>character(1)</code> giving the name of the new
+variable in the <code>colData</code> where the number of unique features
+will be stored. The name cannot already exist in the
+<code>colData</code>.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>An object of class <code>QFeatures</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"ft_na"</span><span class='op'>)</span>
+<span class='co'>## Count number of (non-missing) PSMs</span>
+<span class='va'>ft_na</span> <span class='op'>&lt;-</span> <span class='fu'>countUniqueFeatures</span><span class='op'>(</span><span class='va'>ft_na</span>, 
+                             i <span class='op'>=</span> <span class='st'>"na"</span>, 
+                             colDataName <span class='op'>=</span> <span class='st'>"counts"</span><span class='op'>)</span>
+<span class='va'>ft_na</span><span class='op'>$</span><span class='va'>counts</span>
+</div><div class='co'>#&gt; [1] 2 3 4</div><div class='input'><span class='co'>## Count number of unique rowData feature</span>
+<span class='va'>ft_na</span> <span class='op'>&lt;-</span> <span class='fu'>countUniqueFeatures</span><span class='op'>(</span><span class='va'>ft_na</span>, 
+                             i <span class='op'>=</span> <span class='st'>"na"</span>, 
+                             groupBy <span class='op'>=</span> <span class='st'>"Y"</span>,
+                             colDataName <span class='op'>=</span> <span class='st'>"Y_counts"</span><span class='op'>)</span>
+<span class='va'>ft_na</span><span class='op'>$</span><span class='va'>Y_counts</span>
+</div><div class='co'>#&gt; [1] 2 2 2</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
